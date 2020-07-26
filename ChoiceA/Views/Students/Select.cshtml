@@ -1,0 +1,35 @@
+﻿@model SelectViewModel
+@{
+    ViewData["Title"] = "Select";
+}
+
+<h1>Select</h1>
+<form method="POST" action="/Students/Select">
+
+    <input type="hidden" asp-for="@Model.Student.Id" class="form-control" />
+    <input type="hidden" asp-for="@Model.Student.Name" class="form-control" />
+    <input type="hidden" asp-for="@Model.Student.Group" class="form-control" />
+
+    @for (int i = 0; i < Model.SelectedDiscipline.Count; i++)
+    {
+
+
+        <div>
+            <input type="hidden" asp-for="@Model.SelectedDiscipline[i].Discipline.Id" class="form-control" />
+            <input type="hidden" asp-for="@Model.SelectedDiscipline[i].Discipline.Title" class="form-control" />
+
+            @Html.DisplayFor(m => m.SelectedDiscipline[i].Discipline.Title)
+            @Html.EditorFor(m => m.SelectedDiscipline[i].IsChecked)
+        </div>
+    }
+
+
+
+
+
+
+    <input type="submit" value="Изменить" />
+
+</form>
+
+
