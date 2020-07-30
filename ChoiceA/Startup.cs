@@ -27,11 +27,27 @@ namespace ChoiceA
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+        
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("NotStudent",
+                    policyBuilder => policyBuilder.RequireAssertion(
+                        context => !context.User.Claims.Any(c => c.Type == "studentId")
+                    ));
+            });
        
             services.AddDbContext<ChoiceContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 6;
+                options.SignIn.RequireConfirmedAccount = true;
+                })
                 .AddEntityFrameworkStores<ChoiceContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();

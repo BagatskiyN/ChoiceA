@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ChoiceA.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "NotStudent")]
     public class DisciplinesController : Controller
     {
         private readonly ChoiceContext _context;
@@ -24,12 +24,11 @@ namespace ChoiceA.Controllers
         // GET: Disciplines
         public async Task<IActionResult> Index()
         {
-            var choiceContext = _context.Disciplines.Include(d => d.Teacher);
-            return View(await choiceContext.ToListAsync());
+            return View(await _context.Disciplines.ToListAsync());
         }
 
         // GET: Disciplines/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
@@ -37,7 +36,6 @@ namespace ChoiceA.Controllers
             }
 
             var discipline = await _context.Disciplines
-                .Include(d => d.Teacher)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (discipline == null)
             {
@@ -50,7 +48,7 @@ namespace ChoiceA.Controllers
         // GET: Disciplines/Create
         public IActionResult Create()
         {
-            ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "Id");
+            ViewData["TeacherName"] = new SelectList(_context.Teachers, "Id", "Name");
             return View();
         }
 
@@ -67,12 +65,12 @@ namespace ChoiceA.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "Id", discipline.TeacherId);
+            ViewData["TeacherName"] = new SelectList(_context.Teachers, "Name", "Name", _context.Teachers.Where(x => x.Id == discipline.TeacherId).Select(x => x.Name));
             return View(discipline);
         }
 
         // GET: Disciplines/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -84,7 +82,7 @@ namespace ChoiceA.Controllers
             {
                 return NotFound();
             }
-            ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "Id", discipline.TeacherId);
+            ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "Name", discipline.TeacherId);
             return View(discipline);
         }
 
@@ -93,7 +91,7 @@ namespace ChoiceA.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Title,Annotation,TeacherId")] Discipline discipline)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Annotation,TeacherId")] Discipline discipline)
         {
             if (id != discipline.Id)
             {
@@ -118,14 +116,14 @@ namespace ChoiceA.Controllers
                         throw;
                     }
                 }
+                ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "Id", discipline.TeacherId);
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TeacherId"] = new SelectList(_context.Teachers, "Id", "Id", discipline.TeacherId);
             return View(discipline);
         }
 
         // GET: Disciplines/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
@@ -133,7 +131,6 @@ namespace ChoiceA.Controllers
             }
 
             var discipline = await _context.Disciplines
-                .Include(d => d.Teacher)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (discipline == null)
             {
@@ -146,7 +143,7 @@ namespace ChoiceA.Controllers
         // POST: Disciplines/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var discipline = await _context.Disciplines.FindAsync(id);
             _context.Disciplines.Remove(discipline);
@@ -154,7 +151,7 @@ namespace ChoiceA.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DisciplineExists(string id)
+        private bool DisciplineExists(int id)
         {
             return _context.Disciplines.Any(e => e.Id == id);
         }

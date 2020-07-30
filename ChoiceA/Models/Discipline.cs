@@ -9,11 +9,11 @@ namespace ChoiceA.Models
 {
     public class Discipline 
     {
-    public string Id { get; set; }
+    public int Id { get; set; }
         public string Title { set; get; }
         public string Annotation { set; get; }
         //
-        public string TeacherId { get; set; }
+        public int TeacherId { get; set; }
         public Teacher Teacher { set; get; }
 
         public List<DisciplineStudent> DisciplineStudents { get; set; }

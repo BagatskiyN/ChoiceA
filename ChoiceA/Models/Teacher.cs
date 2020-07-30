@@ -9,10 +9,12 @@ namespace ChoiceA.Models
 {
     public class Teacher
     {
-        public string Id { get; set; }
-        //public virtual ApplicationUser ApplicationUser { get; set; }
+        public int Id { get; set; }
+
+
+        [ForeignKey("ApplicationUser")]
         public string Name { set; get; }
-        //
+        public virtual ApplicationUser ApplicationUser { get; set; }
         public List<Discipline> Disciplines { get; set; }
     }
 }

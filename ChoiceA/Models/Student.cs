@@ -11,9 +11,11 @@ namespace ChoiceA.Models
     public class Student
     {
     
-        public string Id { get; set; }
-        //public virtual ApplicationUser ApplicationUser { get; set; }
-        public string Name { set; get; }
+        public int Id { get; set; }
+     
+        [ForeignKey("ApplicationUser")]
+        public string Name { set; get; } 
+        public virtual ApplicationUser ApplicationUser { get; set; }
         public string Group { set; get; }
 
         public List<DisciplineStudent> DisciplineStudents { get; set; }
