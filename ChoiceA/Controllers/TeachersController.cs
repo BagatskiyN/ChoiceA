@@ -10,15 +10,16 @@ using ChoiceA.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using static ChoiceA.ActionResults.ForAdminFilter;
 
 namespace ChoiceA.Controllers
 {
-    [Authorize(Policy = "NotStudent")]
+    [ForAdmin]
     public class TeachersController : Controller
     {
         private readonly ChoiceContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
-        public TeachersController(ChoiceContext context,UserManager<IdentityUser> userManager)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public TeachersController(ChoiceContext context,UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
             _context = context;
@@ -80,7 +81,7 @@ namespace ChoiceA.Controllers
             if (ModelState.IsValid)
             {
                 // register new user
-                var user = new IdentityUser { UserName = teacher.Name, Email = $"{teacher.Name}@gmail.com", EmailConfirmed = true };
+                var user = new ApplicationUser { UserName = teacher.Name, Email = $"{teacher.Name}@gmail.com", EmailConfirmed = true };
                 var result = await _userManager.CreateAsync(user, "123456");
 
                 if (result.Succeeded)

@@ -8,10 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using ChoiceA.Data;
 using ChoiceA.Models;
 using Microsoft.AspNetCore.Authorization;
+using static ChoiceA.ActionResults.ForAdminFilter;
 
 namespace ChoiceA.Controllers
 {
-    [Authorize(Policy = "NotStudent")]
+    [ForAdmin]
     public class DisciplinesController : Controller
     {
         private readonly ChoiceContext _context;

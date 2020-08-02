@@ -17,8 +17,8 @@ namespace ChoiceA.Controllers
     public class StudentsController : Controller
     {
         private readonly ChoiceContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
-        public StudentsController(ChoiceContext context,UserManager<IdentityUser> userManager)
+        private readonly UserManager<ApplicationUser> _userManager;
+        public StudentsController(ChoiceContext context,UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
             _context = context;
@@ -67,7 +67,7 @@ namespace ChoiceA.Controllers
             if (ModelState.IsValid)
             {
                 // register new user
-                var user = new IdentityUser { UserName = student.Name, Email = $"{student.Name}@gmail.com",EmailConfirmed=true };
+                var user = new ApplicationUser { UserName = student.Name, Email = $"{student.Name}@gmail.com",EmailConfirmed=true };
                 var result = await _userManager.CreateAsync(user, "123456");
 
                 if (result.Succeeded)
@@ -118,7 +118,7 @@ namespace ChoiceA.Controllers
             {
                 return NotFound();
             }
-            var studentFormer = await _context.Students.FindAsync(id);
+            var studentFormer =await _context.Students.AsNoTracking().FirstOrDefaultAsync(s => s.Id == id);
             var user = await _userManager.FindByNameAsync(studentFormer.Name);
          
             var res = await _userManager.UpdateAsync(user);

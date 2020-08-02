@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 namespace ChoiceA.Data
 {
-    public class ChoiceContext : IdentityDbContext<IdentityUser>
+    public class ChoiceContext : IdentityDbContext<ApplicationUser>
     {
         private readonly string _conStr = "Data Source =.\\SQLEXPRESS;Initial Catalog = ChoiceA; Integrated Security = True";
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
@@ -29,22 +29,22 @@ namespace ChoiceA.Data
             modelBuilder.Entity<DisciplineStudent>()
                       .HasKey(t => new { t.DisciplineId, t.StudentId });
 
-            //   modelBuilder.Entity<Student>()
-            //.HasKey(e => e.Name);
+       
             modelBuilder
          .Entity<ApplicationUser>()
          .HasOne(u => u.Student)
          .WithOne(p => p.ApplicationUser)
          .HasForeignKey<Student>(p => p.Name)
-         .HasPrincipalKey<ApplicationUser>(c => c.UserName);
-            //      modelBuilder.Entity<Teacher>()
-            //.HasKey(e => e.Name);
+         .HasPrincipalKey<ApplicationUser>(c => c.UserName)
+     ;
+         
             modelBuilder
            .Entity<ApplicationUser>()
            .HasOne(u => u.Teacher)
            .WithOne(p => p.ApplicationUser)
            .HasForeignKey<Teacher>(p => p.Name)
-           .HasPrincipalKey<ApplicationUser>(c => c.UserName);
+           .HasPrincipalKey<ApplicationUser>(c => c.UserName)
+         ;
             base.OnModelCreating(modelBuilder);
 
         }
@@ -61,6 +61,28 @@ namespace ChoiceA.Data
             public int StudentId { get; set; }
             public Student Student { get; set; }
         }
+        public class RoleInitializer
+        {
+            public static async Task InitializeAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+            {
+                string adminEmail = "admin@gmail.com";
+                string password = "Admin1@";
+                if (await roleManager.FindByNameAsync("admin") == null)
+                {
+                    await roleManager.CreateAsync(new IdentityRole("admin"));
+                }
+                
+                if (await userManager.FindByNameAsync(adminEmail) == null)
+                {
+                    ApplicationUser admin = new ApplicationUser { Email = adminEmail, UserName = adminEmail,EmailConfirmed=true };
+                    IdentityResult result = await userManager.CreateAsync(admin, password);
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(admin, "admin");
+                    }
+                }
+            }
+        }
 
-    }
+        }
 }
