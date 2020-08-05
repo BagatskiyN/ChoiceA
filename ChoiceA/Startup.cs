@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ChoiceA.Models;
+using ChoiceA.Service;
 
 namespace ChoiceA
 {
@@ -28,7 +29,7 @@ namespace ChoiceA
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.GetGroupList();
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("NotStudent",

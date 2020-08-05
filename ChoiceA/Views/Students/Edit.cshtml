@@ -1,5 +1,5 @@
 ﻿@model ChoiceA.Models.Student
-
+@inject ChoiceA.Service.IGroupService service;
 @{
     ViewData["Title"] = "Edit";
 }
@@ -15,13 +15,16 @@
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
+                <input type="text" asp-for="Name" readonly/>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Group" class="control-label"></label>
-                <input asp-for="Group" class="form-control" />
-                <span asp-validation-for="Group" class="text-danger"></span>
+                <div class="form-group">
+                    <label asp-for="Group"></label>
+                    <select asp-for="Group" asp-items=" new SelectList(service.GetGroupList())"></select>
+                    @*<label asp-for="Group" class="control-label"></label>
+                        @Html.DropDownListFor(m => m.Group, service.GetGroupList() as IEnumerable<SelectListItem>)*@
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

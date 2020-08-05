@@ -10,6 +10,7 @@ using ChoiceA.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using ChoiceA.Service;
 
 namespace ChoiceA.Controllers
 {
@@ -18,8 +19,10 @@ namespace ChoiceA.Controllers
     {
         private readonly ChoiceContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        public StudentsController(ChoiceContext context,UserManager<ApplicationUser> userManager)
+        private readonly IGroupService _groupService;
+        public StudentsController(ChoiceContext context,UserManager<ApplicationUser> userManager,IGroupService groupService)
         {
+            _groupService = groupService;
             _userManager = userManager;
             _context = context;
         }
@@ -53,7 +56,7 @@ namespace ChoiceA.Controllers
         // GET: Students/Create
         public IActionResult Create()
         {
-           
+            //ViewBag.Groups = new SelectList(_groupService.GetGroupList());
             return View();
         }
 
@@ -118,11 +121,7 @@ namespace ChoiceA.Controllers
             {
                 return NotFound();
             }
-            var studentFormer =await _context.Students.AsNoTracking().FirstOrDefaultAsync(s => s.Id == id);
-            var user = await _userManager.FindByNameAsync(studentFormer.Name);
-         
-            var res = await _userManager.UpdateAsync(user);
-   _context.SaveChanges();
+
             if (ModelState.IsValid)
             {
                 try
