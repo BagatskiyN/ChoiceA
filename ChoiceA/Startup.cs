@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ChoiceA.Models;
 using ChoiceA.Service;
+using ChoiceA.Middleware;
 
 namespace ChoiceA
 {
@@ -86,7 +87,7 @@ namespace ChoiceA
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseTopSecret("wwwroot");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
