@@ -26,7 +26,7 @@ namespace ChoiceA.Middleware
         //
         public async Task Invoke(HttpContext context)
         {
-            var name = context.Request.Path.Value.Split("/").Last();     
+            var name = context.Request.Path.Value.Split("/").Last();     // like 123.png
             if (name.EndsWith(".secret"))
             {
                 if (context.User.Identity.IsAuthenticated)
