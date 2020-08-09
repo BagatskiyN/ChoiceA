@@ -22,11 +22,10 @@ namespace ChoiceA.Middleware
             _path = path;
         }
 
-        // собственно RequestDelegate
-        //
+      
         public async Task Invoke(HttpContext context)
         {
-            var name = context.Request.Path.Value.Split("/").Last();     // like 123.png
+            var name = context.Request.Path.Value.Split("/").Last();     
             if (name.EndsWith(".secret"))
             {
                 if (context.User.Identity.IsAuthenticated)
