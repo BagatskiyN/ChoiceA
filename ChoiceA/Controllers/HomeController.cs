@@ -10,6 +10,7 @@ using ChoiceA.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using static ChoiceA.Data.ChoiceContext;
+using Newtonsoft.Json;
 
 namespace ChoiceA.Controllers
 {
@@ -65,41 +66,93 @@ namespace ChoiceA.Controllers
             }
         }
         [HttpPost]
-        public IActionResult Select(SelectViewModel selectViewModel)
+        public IActionResult SelectAjax([FromBody] List<Testt> a)
         {
-            Student student = _context.Students.Include(s => s.DisciplineStudents).FirstOrDefault(s => s.Id == selectViewModel.Student.Id);
 
-            for (int i = 0; i < selectViewModel.SelectedDiscipline.Count; i++)
+    
+            if (ModelState.IsValid)
             {
-                Discipline discipline = _context.Disciplines
-                            .FirstOrDefault(c => c.Id == selectViewModel.SelectedDiscipline[i].Discipline.Id);
+                Student student = _context.Students.Include(s => s.DisciplineStudents).FirstOrDefault(s => s.Name ==User.Identity.Name);
 
-                var studDis = student.DisciplineStudents.FirstOrDefault(sd => sd.DisciplineId == discipline.Id);
-
-                DisciplineStudent disciplineStudent = new DisciplineStudent() { DisciplineId = discipline.Id, StudentId = student.Id };
-                if (selectViewModel.SelectedDiscipline[i].IsChecked == true)
+                for (int i = 0; i <a.Count; i++)
                 {
+                    Discipline discipline = _context.Disciplines
+                                .FirstOrDefault(c => c.Title == a[i].Title);
 
-                    if (!student.DisciplineStudents.Contains(studDis))
-                    {
-                        student.DisciplineStudents.Add(disciplineStudent);
-                    }
+                    var studDis = student.DisciplineStudents.FirstOrDefault(sd => sd.DisciplineId == discipline.Id);
 
-                }
-                else
-                {
-                    if (student.DisciplineStudents.Contains(studDis))
+                    DisciplineStudent disciplineStudent = new DisciplineStudent() { DisciplineId = discipline.Id, StudentId = student.Id };
+                    if (a[i].IsChecked == true)
                     {
-                        student.DisciplineStudents.Remove(studDis);
+
+                        if (!student.DisciplineStudents.Contains(studDis))
+                        {
+                            student.DisciplineStudents.Add(disciplineStudent);
+                        }
 
                     }
+                    else
+                    {
+                        if (student.DisciplineStudents.Contains(studDis))
+                        {
+                            student.DisciplineStudents.Remove(studDis);
+
+                        }
+                    }
+                    _context.SaveChanges();
                 }
-                _context.SaveChanges();
+                Discipline.Clear();
+
+
+                var students = _context.Students.Include(c => c.DisciplineStudents).ThenInclude(sc => sc.Discipline).ToList();
+                SelectedDiscipline = students.FirstOrDefault(s => s.Id == student.Id).DisciplineStudents.Select(c => c.Discipline).ToList();
+
+                var disciplines = _context.Disciplines.ToList().Except(SelectedDiscipline).ToList();
+                NewDisceplines(SelectedDiscipline, true);
+                NewDisceplines(disciplines, false);
+                return PartialView("~/Views/Home/SelectList.cshtml", Discipline);
             }
-
-            return Redirect("Index");
-
+            return PartialView("~/Views/Home/SelectList.cshtml", Discipline);
         }
+            
+        
+
+        //[HttpPost]
+        //public IActionResult Select(SelectViewModel selectViewModel)
+        //{
+        //    Student student = _context.Students.Include(s => s.DisciplineStudents).FirstOrDefault(s => s.Id == selectViewModel.Student.Id);
+
+        //    for (int i = 0; i < selectViewModel.SelectedDiscipline.Count; i++)
+        //    {
+        //        Discipline discipline = _context.Disciplines
+        //                    .FirstOrDefault(c => c.Id == selectViewModel.SelectedDiscipline[i].Discipline.Id);
+
+        //        var studDis = student.DisciplineStudents.FirstOrDefault(sd => sd.DisciplineId == discipline.Id);
+
+        //        DisciplineStudent disciplineStudent = new DisciplineStudent() { DisciplineId = discipline.Id, StudentId = student.Id };
+        //        if (selectViewModel.SelectedDiscipline[i].IsChecked == true)
+        //        {
+
+        //            if (!student.DisciplineStudents.Contains(studDis))
+        //            {
+        //                student.DisciplineStudents.Add(disciplineStudent);
+        //            }
+
+        //        }
+        //        else
+        //        {
+        //            if (student.DisciplineStudents.Contains(studDis))
+        //            {
+        //                student.DisciplineStudents.Remove(studDis);
+
+        //            }
+        //        }
+        //        _context.SaveChanges();
+        //    }
+
+        //    return Redirect("Index");
+
+        //}
         public IActionResult Privacy()
         {
             return View();

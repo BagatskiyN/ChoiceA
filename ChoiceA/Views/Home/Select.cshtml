@@ -4,32 +4,86 @@
 }
 
 <h1>Select</h1>
-<form method="POST" action="/Home/Select">
 
+    @Html.AntiForgeryToken()
     <input type="hidden" asp-for="@Model.Student.Id" class="form-control" />
     <input type="hidden" asp-for="@Model.Student.Name" class="form-control" />
     <input type="hidden" asp-for="@Model.Student.Group" class="form-control" />
+    <div id="selectList">
 
-    @for (int i = 0; i < Model.SelectedDiscipline.Count; i++)
-    {
-
-
-        <div>
-            <input type="hidden" asp-for="@Model.SelectedDiscipline[i].Discipline.Id" class="form-control" />
-            <input type="hidden" asp-for="@Model.SelectedDiscipline[i].Discipline.Title" class="form-control" />
-
-            @Html.DisplayFor(m => m.SelectedDiscipline[i].Discipline.Title)
-            @Html.EditorFor(m => m.SelectedDiscipline[i].IsChecked)
-        </div>
-    }
+        @for (int i = 0; i < Model.SelectedDiscipline.Count; i++)
+        {
 
 
+            <div >
+                <input type="hidden" name="ckeckbox" asp-for="@Model.SelectedDiscipline[i].Discipline.Id" class="form-control" />
+                <input type="hidden"  name="ckeckbox" asp-for="@Model.SelectedDiscipline[i].Discipline.Title" class="form-control" />
 
+                @Html.DisplayFor(m => m.SelectedDiscipline[i].Discipline.Title,"nameCheck")
+                <input type="checkbox" name="@Model.SelectedDiscipline[i].Discipline.Title" value=@Model.SelectedDiscipline[i].IsChecked checked=@Model.SelectedDiscipline[i].IsChecked/>
+                @*@Html.EditorFor(m => m.SelectedDiscipline[i].IsChecked, "checkEdit")*@
+            </div>
+        }
+    </div>
 
+    <input type="button" id="elem" value="Изменить" onclick="send()" />
 
+    <script type="text/javascript">
+           
+ function send() {
+     const url = '/Home/SelectAjax';
 
-    <input type="submit" value="Изменить" />
+         //let formData = new FormData();
+         //let data = {
+         //    IsChecked: true,
+         //    Title: 'awfawf'
+         //};
+         //let xsrf_token = document.getElementsByName("__RequestVerificationToken")[0].value;
+         //let formData = new FormData();
 
-</form>
+         //formData.append("str", data);
+         //formData.append("data",DiscList);
+         try {
+             let DiscList = [];
+        
+             let a = document.querySelectorAll("input[type='checkbox']");
+             a.forEach((item, i) => {
+                 let elem = { IsChecked: item.checked, Title: item.name }
+                 DiscList.push(elem)
+             })
+       
+       
+        $.ajax(url, {
+            method: 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(DiscList),
+            traditional: true,
+          
+            success: function (data) {
+                $("#selectList").replaceWith(data);
+            }
+        });
+            //const response = await fetch(url, {
+            //     //contentType: 'application/json',
+            //    method: 'POST',
+            //    data: JSON.stringify(data),
+            //    traditional: true,
+            //    credentials: 'include',
+            //    headers: { "XSRF-TOKEN": xsrf_token, "Accept": "application/json", "Content-Type": "application/json" }, 
+            //});
+            //if (response.status === 200) {
+            //    //const json = await response.json();
+            //    //add_message(text, json.userName);
+            //}
+            //else {
+            //    const text = await response.text();
+            //    alert(text);
+            //}
+        } catch (error) {
+            console.error('Ошибка:', error);
+         }
+     }
 
+    </script>
+    
 

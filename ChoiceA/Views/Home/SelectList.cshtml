@@ -1,0 +1,15 @@
+﻿@model List<CheckedModel>
+    <div id="selectList">
+        @for (int i = 0; i < Model.Count; i++)
+        {
+
+
+            <div>
+                <input type="hidden" asp-for="@Model[i].Discipline.Id" class="form-control" />
+                <input type="hidden" asp-for="@Model[i].Discipline.Title" class="form-control" />
+
+                @Html.DisplayFor(m => m[i].Discipline.Title, "nameCheck")
+                <input type="checkbox" name="@Model[i].Discipline.Title" value=@Model[i].IsChecked checked=@Model[i].IsChecked />
+            </div>
+        }
+    </div>

@@ -37,13 +37,10 @@ namespace ChoiceA.Middleware
                     {
                      
                      await context.Response.WriteAsync(line);
-                   
-                       
+ 
                     }
                  
                 }
-
-
                 else
                 {
                     await context.Response.WriteAsync("User is not authenticated");
