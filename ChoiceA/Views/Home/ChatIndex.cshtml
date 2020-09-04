@@ -1,0 +1,23 @@
+﻿@page
+@model ChoiceA.Models.IndexModel
+@{
+
+}
+@if (Model.Messages != null)
+{
+@foreach (var mes in Model.Messages)
+{
+    <div>
+        <div style="font-size:larger">@mes.Text</div>
+        <div style="font-size: smaller">@mes.Sign --- @mes.When</div>
+    </div>
+}}
+<hr />
+<div>
+    <form method="post">
+        <label asp-for="Text"></label>
+        <input asp-for="Text" value="" />
+        <input type="submit" value="Send" />
+        <span asp-validation-for="Text"></span>
+    </form>
+</div>

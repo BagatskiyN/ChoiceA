@@ -65,6 +65,8 @@ namespace ChoiceA.Controllers
 
             }
         }
+
+
         [HttpPost]
         public IActionResult SelectAjax([FromBody] List<Testt> a)
         {
@@ -153,6 +155,16 @@ namespace ChoiceA.Controllers
         //    return Redirect("Index");
 
         //}
+
+        public IActionResult ChatIndex()      
+        {
+            return View(new IndexModel(_context));
+
+        }
+
+
+
+
         public IActionResult Privacy()
         {
             return View();

@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="ChoiceA.Models.ApplicationUser">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ApplicationUser.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Student" />
+      <Property Name="Teacher" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ChoiceA.Models.CheckedModel">
+    <Position X="8.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\CheckedModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Discipline" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ChoiceA.Models.Discipline">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAECAAAAAAAAAEAAAAAAiAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Models\Discipline.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Teacher" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ChoiceA.Models.ErrorViewModel">
+    <Position X="12.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ErrorViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChoiceA.Models.IndexModel">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQACQAAAAA=</HashCode>
+      <FileName>Models\IndexModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChoiceA.Models.SelectViewModel">
+    <Position X="12.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\SelectViewModel.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Student" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="SelectedDiscipline" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="ChoiceA.Models.Student">
+    <Position X="6.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAAAAAAAAQAAAAAAQAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Models\Student.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ApplicationUser" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ChoiceA.Models.Teacher">
+    <Position X="6.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAQQAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Teacher.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ApplicationUser" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="ChoiceA.Models.Testt">
+    <Position X="11.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Testt.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChoiceA.Controllers.DisciplinesController">
+    <Position X="0.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABBACAAAAAAAAAAAEAAEgCAAEAAAAAAAA=</HashCode>
+      <FileName>Controllers\DisciplinesController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChoiceA.Controllers.HomeController">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <AssociationLine Name="Discipline" Type="ChoiceA.Models.CheckedModel">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.102" Y="0.268" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAigIABQAAIAAAAAAAIAAAAQAAAAEAQAAAAAA=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Discipline" />
+      <Property Name="SelectedDiscipline" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="ChoiceA.Controllers.StudentsController">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAFAAAAAABBACAAAAAAAAAAAEAAEACAAEABAAAAAA=</HashCode>
+      <FileName>Controllers\StudentsController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChoiceA.Controllers.TeachersController">
+    <Position X="4.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAABBACAAAAAAAAAAAEAAEACAAEAAAAAAQA=</HashCode>
+      <FileName>Controllers\TeachersController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChoiceA.Data.ChoiceContext">
+    <Position X="14.25" Y="0.75" Width="1.5" />
+    <NestedTypes>
+      <Class Name="ChoiceA.Data.ChoiceContext.DisciplineStudent" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Data\ChoiceContext.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="ChoiceA.Data.ChoiceContext.RoleInitializer" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Data\ChoiceContext.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAQAAAAAAQAAAAAAAEAAAgAAAAAAgAwAAAAA=</HashCode>
+      <FileName>Data\ChoiceContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChoiceA.ActionResults.ForAdminFilter">
+    <Position X="15" Y="4.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="ChoiceA.ActionResults.ForAdminFilter.ForAdminAttribute" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ActionResults\ForAdminFilter.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+      <Class Name="ChoiceA.ActionResults.ForAdminFilter.ForStudentFilter" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ActionResults\ForAdminFilter.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ActionResults\ForAdminFilter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ChoiceA.Areas.Identity.Pages.Account.LoginModel">
+    <Position X="11" Y="5.75" Width="1.5" />
+    <NestedTypes>
+      <Class Name="ChoiceA.Areas.Identity.Pages.Account.LoginModel.InputModel" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Areas\Identity\Pages\Account\Login.cshtml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AQAABAAAAAAAAAAgAABAAAAAMAAAAQAAAAIEAAAAAAA=</HashCode>
+      <FileName>Areas\Identity\Pages\Account\Login.cshtml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChoiceA.Areas.Identity.Pages.Account.LogoutModel">
+    <Position X="15" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAABAAAAAIAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Areas\Identity\Pages\Account\Logout.cshtml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChoiceA.Areas.Identity.Pages.Account.RegisterModel">
+    <Position X="13" Y="5.75" Width="1.5" />
+    <NestedTypes>
+      <Class Name="ChoiceA.Areas.Identity.Pages.Account.RegisterModel.InputModel" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Areas\Identity\Pages\Account\Register.cshtml.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAAgAABAAAAAMACAAQAAAAIEAAAAAAA=</HashCode>
+      <FileName>Areas\Identity\Pages\Account\Register.cshtml.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChoiceA.GroupList">
+    <Position X="8.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAABAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Service\GroupList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChoiceA.Service.GroupSevice" BaseTypeListCollapsed="true">
+    <Position X="2.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Service\GroupSevice.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ChoiceA.Service.GrupServiceExtention">
+    <Position X="4.5" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Service\GroupSevice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="ChoiceA.Service.IGroupService">
+    <Position X="2.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Service\GroupSevice.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

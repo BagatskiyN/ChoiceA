@@ -15,6 +15,7 @@ namespace ChoiceA.Data
         public DbSet<Student> Students { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Discipline> Disciplines { get; set; }
+        public DbSet<Message> Messages { get; set; }
         public ChoiceContext(DbContextOptions<ChoiceContext> options) : base(options)
         {
 
